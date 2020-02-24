@@ -19,4 +19,4 @@ export default function(state = [], action) {
   }
 }
 
-// Operations
+// Somethings..
