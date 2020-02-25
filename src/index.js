@@ -6,11 +6,14 @@ import App from './App';
 import configureStore from './configure-store';
 
 import { fetchGrads } from './api';
-const store = configureStore();
+
+const initialState = { grads: fetchGrads() };
+
+const store = configureStore(initialState);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App grads={fetchGrads()} />
+    <App />
   </Provider>,
   document.getElementById('root')
 );
