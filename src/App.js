@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchGrads } from './api';
-import { fetchGrads as createActionFetchGrads } from './grads';
+import { getGradsFromApi } from './grads';
 
 class App extends React.Component {
   componentDidMount() {
@@ -10,23 +9,24 @@ class App extends React.Component {
   }
 
   render() {
-    const { grads } = this.props;
+    const { grads, isLoading } = this.props;
     const gradsList = grads.map((grad) => <li key={grad.id}>{grad.name}</li>);
     return (
       <div>
         <h1>SL February Grads:</h1>
-        <ul>{gradsList}</ul>
+        {isLoading ? <p>Loading...</p> : <ul>{gradsList}</ul>}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  grads: state.grads
+  grads: state.grads.data,
+  isLoading: state.grads.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getGrads: () => dispatch(createActionFetchGrads(fetchGrads()))
+  getGrads: () => getGradsFromApi(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
